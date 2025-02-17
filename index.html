@@ -516,13 +516,6 @@
     </style>
 
 <style>
-    .scrollable-container {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 1rem;
-        font-family: Arial, sans-serif;
-    }
     
     #yearSelect {
         -webkit-appearance: none;
@@ -631,18 +624,12 @@
     .pause-icon {
         display: none;
     }
-    .scrollable-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    font-family: Arial, sans-serif;
-}
+
 
 #yearSelect {
     -webkit-appearance: none;
     appearance: none;
-    width: 300px;
+    width: 700px;
     height: 10px;
     background: linear-gradient(to right, #3b82f6 0%, #3b82f6 50%, #ddd 50%, #ddd 100%);
     border-radius: 5px;
@@ -662,6 +649,29 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     transition: all 0.2s;
 }
+
+.col-md-6 {
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.scrollable-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+}
+
+.form-select {
+    flex: 1; /* Rend tous les <select> de la même taille */
+    min-width: 200px; /* Assure une taille minimale */
+    max-width: 400px; /* Définit une largeur maximale si nécessaire */
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+
     </style>
 
     
@@ -672,7 +682,7 @@
         <!-- Sidebar -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3>Ressources en Eau</h3>
+                <h3>AquaMonde</h3>
 
             </div>
 
@@ -683,21 +693,13 @@
                         <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                     </a>
                 </li>
-                <li>
-                    <a href="#" data-section="statistics">
-                        <i class="fas fa-chart-line me-2"></i>Statistiques
-                    </a>
-                </li>
+              
                 <li>
                     <a href="#" data-section="data">
                         <i class="fas fa-database me-2"></i>Données
                     </a>
                 </li>
-                <li>
-                    <a href="#" data-section="settings">
-                        <i class="fas fa-cog me-2"></i>Paramètres
-                    </a>
-                </li>
+                
             </ul>
         </nav>
 
@@ -777,22 +779,156 @@
             <div class="container-fluid px-4">
                 <div class="row g-4">
                     <div class="scrollable-container">
-                        <button class="control-button" id="playButton">
-                            <svg class="play-icon" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z"/>
-                            </svg>
-                            <svg class="pause-icon" viewBox="0 0 24 24">
-                                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                            </svg>
-                        </button>
-                        <input type="range" id="yearSelect" min="2010" max="2021" value="2010">
-                        <span id="yearValue">2010</span>
+                        
+                        <select class="form-select" id="categorySelect">
+                            <option value="">Sélectionner une catégorie</option>
+                        </select>
+                        
+                        <select class="form-select" id="groupSelect">
+                            <option value="">Sélectionner un groupe</option>
+                        </select>
+                        
                         <select class="form-select" id="variableSelect">
                             <option value="">Sélectionner une variable</option>
-                            <option value="1">Variable 1</option>
-                            <option value="2">Variable 2</option>
-                            <option value="3">Variable 3</option>
                         </select>
+                        
+                        <script>
+                            const dataStructure = {
+                                "Water resources": {
+                                    "Exploitable water resources and dam capacity": [
+                                        "Dam capacity per capita",
+                                        "Exploitable: irregular renewable surface water",
+                                        "Exploitable: regular renewable groundwater",
+                                        "Exploitable: regular renewable surface water",
+                                        "Exploitable: total renewable surface water",
+                                        "Interannual variability (WRI)",
+                                        "Seasonal variability (WRI)",
+                                        "Total dam capacity",
+                                        "Total exploitable water resources"
+                                    ],
+                                    "External renewable water resources": [
+                                        "Groundwater: accounted inflow",
+                                        "Groundwater: accounted outflow to other countries",
+                                        "Groundwater: entering the country (total)",
+                                        "Groundwater: leaving the country to other countries (total)",
+                                        "Surface water: accounted flow of border rivers",
+                                        "Surface water: accounted inflow",
+                                        "Surface water: entering the country (total)",
+                                        "Surface water: inflow not submitted to treaties",
+                                        "Surface water: inflow secured through treaties",
+                                        "Surface water: inflow submitted to treaties",
+                                        "Surface water: leaving the country to other countries (total)",
+                                        "Surface water: outflow to other countries not submitted to treaties",
+                                        "Surface water: outflow to other countries secured through treaties",
+                                        "Surface water: outflow to other countries submitted to treaties",
+                                        "Surface water: total external renewable",
+                                        "Surface water: total flow of border rivers",
+                                        "Water resources: total external renewable"
+                                    ],
+                                    "Internal renewable water resources": [
+                                        "Groundwater produced internally",
+                                        "Overlap between surface water and groundwater"
+                                    ]
+                                },
+                                "Water use": {
+                                    "Pressure on water resources": [
+                                        "Agricultural water withdrawal as % of total renewable water resources",
+                                        "SDG 6.4.1. Industrial Water Use Efficiency",
+                                        "SDG 6.4.1. Irrigated Agriculture Water Use Efficiency",
+                                        "SDG 6.4.1. Services Water Use Efficiency",
+                                        "SDG 6.4.1. Water Use Efficiency",
+                                        "SDG 6.4.2. Agricultural Sector Contribution to Water Stress",
+                                        "SDG 6.4.2. Industrial Sector Contribution to Water Stress",
+                                        "SDG 6.4.2. Municipal Sector Contribution to Water Stress",
+                                        "SDG 6.4.2. Water Stress"
+                                    ],
+                                    "Wastewater": [
+                                        "Area equipped for irrigation by direct use of not treated municipal wastewater",
+                                        "Area equipped for irrigation by direct use of treated municipal wastewater",
+                                        "Capacity of the municipal wastewater treatment facilities",
+                                        "Collected municipal wastewater",
+                                        "Direct use of not treated municipal wastewater for irrigation purposes",
+                                        "Direct use of treated municipal wastewater for irrigation purposes",
+                                        "Not treated municipal wastewater",
+                                        "Not treated municipal wastewater discharged (secondary water)",
+                                        "Number of municipal wastewater treatment facilities",
+                                        "Produced municipal wastewater",
+                                        "Treated municipal wastewater",
+                                        "Treated municipal wastewater discharged (secondary water)"
+                                    ],
+                                    "Water withdrawal by sector": [
+                                        "Agricultural water withdrawal",
+                                        "Agricultural water withdrawal as % of total water withdrawal",
+                                        "Agricultural water withdrawal per capita",
+                                        "Environmental Flow Requirements",
+                                        "Industrial water withdrawal",
+                                        "Industrial water withdrawal as % of total water withdrawal",
+                                        "Industrial water withdrawal per capita",
+                                        "Irrigation water requirement",
+                                        "Irrigation water withdrawal",
+                                        "Municipal water withdrawal",
+                                        "Municipal water withdrawal as % of total withdrawal",
+                                        "Municipal water withdrawal per capita (total population)",
+                                        "Total water withdrawal",
+                                        "Total water withdrawal per capita",
+                                        "Water withdrawal for aquaculture"
+                                    ]
+                                }
+                            };
+                        
+                            const categorySelect = document.getElementById("categorySelect");
+                            const groupSelect = document.getElementById("groupSelect");
+                            const variableSelect = document.getElementById("variableSelect");
+                        
+                            // Remplir les catégories principales
+                            function populateCategories() {
+                                categorySelect.innerHTML = `<option value="">Sélectionner une catégorie</option>` +
+                                    Object.keys(dataStructure).map(category => 
+                                        `<option value="${category}">${category}</option>`
+                                    ).join('');
+                            }
+                        
+                            // Mettre à jour les groupes en fonction de la catégorie sélectionnée
+                            function updateGroups() {
+                                const selectedCategory = categorySelect.value;
+                                if (!selectedCategory) {
+                                    groupSelect.innerHTML = `<option value="">Sélectionner un groupe</option>`;
+                                    variableSelect.innerHTML = `<option value="">Sélectionner une variable</option>`;
+                                    return;
+                                }
+                        
+                                groupSelect.innerHTML = `<option value="">Sélectionner un groupe</option>` +
+                                    Object.keys(dataStructure[selectedCategory]).map(group =>
+                                        `<option value="${group}">${group}</option>`
+                                    ).join('');
+                        
+                                variableSelect.innerHTML = `<option value="">Sélectionner une variable</option>`;
+                            }
+                        
+                            // Mettre à jour les variables en fonction du groupe sélectionné
+                            function updateVariables() {
+                                const selectedCategory = categorySelect.value;
+                                const selectedGroup = groupSelect.value;
+                        
+                                if (!selectedGroup) {
+                                    variableSelect.innerHTML = `<option value="">Sélectionner une variable</option>`;
+                                    return;
+                                }
+                        
+                                variableSelect.innerHTML = `<option value="">Sélectionner une variable</option>` +
+                                    dataStructure[selectedCategory][selectedGroup].map(variable =>
+                                        `<option value="${variable}">${variable}</option>`
+                                    ).join('');
+                            }
+                        
+                            // Écouteurs d'événements
+                            categorySelect.addEventListener("change", updateGroups);
+                            groupSelect.addEventListener("change", updateVariables);
+                        
+                            // Initialisation
+                            populateCategories();
+                        </script>
+                        
                     </div>
                     <div class="col-md-6">
                       
@@ -804,7 +940,24 @@
                             </div>
                           
                             <div id="chart" class="chart-content"></div>
+                            
+                            
                         </div>
+                        <div class="scrollable-container">
+                            <button class="control-button" id="playButton">
+                                <svg class="play-icon" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                                <svg class="pause-icon" viewBox="0 0 24 24">
+                                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                                </svg>
+                            </button>
+                            <input type="range" id="yearSelect" min="2010" max="2021" value="2010">
+                            <span id="yearValue">2010</span>
+                            
+                        </div>
+                        
+                        
                     </div>
                     
                     <div class="col-md-6">
@@ -918,6 +1071,8 @@
     <script type="module" src="scripts/data.js"></script>
     <script type="module" src="scripts/chart.js"></script>
     <script type="module" src="scripts/chart2.js"></script>
+    <script type="module" src="scripts/chart3.js"></script>
+
     <script src="updates.js"></script>
 </body>
 </html>
