@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Ressources en Eau</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+       :root {
+    --sidebar-width: 250px;
+    --primary-color: #052c65;
+    --hover-color: #0d47a1;
+    --active-color: #1565c0;
+    --transition-speed: 0.3s;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: var(--sidebar-width);
+    max-width: var(--sidebar-width);
+    min-height: 100vh;
+    background: linear-gradient(145deg, var(--primary-color), #042454);
+    color: #fff;
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+#sidebar.active {
+    margin-left: calc(-1 * var(--sidebar-width));
+    box-shadow: none;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+#sidebar .sidebar-header h3 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 1;
+}
+
+#sidebar .sidebar-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+#sidebar .sidebar-header:hover::after {
+    left: 100%;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul li {
+    position: relative;
+    margin: 5px 0;
+}
+
+#sidebar ul li a {
+    padding: 12px 20px;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: all var(--transition-speed) ease;
+    position: relative;
+    overflow: hidden;
+    border-left: 4px solid transparent;
+}
+
+#sidebar ul li a i {
+    margin-right: 10px;
+    transition: transform var(--transition-speed) ease;
+}
+
+/* Effet de survol */
+#sidebar ul li a:hover {
+    background: var(--hover-color);
+    color: #fff;
+    padding-left: 25px;
+    border-left: 4px solid #4fc3f7;
+}
+
+#sidebar ul li a:hover i {
+    transform: scale(1.2);
+}
+
+/* Style pour l'élément actif */
+#sidebar ul li.active a {
+    background: var(--active-color);
+    border-left: 4px solid #4fc3f7;
+    font-weight: 500;
+}
+
+/* Effet d'ondulation au clic */
+#sidebar ul li a::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+#sidebar ul li a:active::before {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+}
+
+/* Animation de survol pour les icônes */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+#sidebar ul li a:hover i {
+    animation: pulse 1s infinite;
+}
+
+#content {
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    transition: all var(--transition-speed);
+}
+
+#content svg {
+    width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: calc(-1 * var(--sidebar-width));
+    }
+    
+    #sidebar.active {
+        margin-left: 0;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    #content {
+        padding: 15px;
+    }
+}
+
+/* Animation lors du chargement de la page */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+#sidebar {
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+/* Animation pour les éléments de la liste */
+#sidebar ul li {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Délai d'animation pour chaque élément */
+#sidebar ul li:nth-child(1) { animation-delay: 0.1s; }
+#sidebar ul li:nth-child(2) { animation-delay: 0.2s; }
+#sidebar ul li:nth-child(3) { animation-delay: 0.3s; }
+#sidebar ul li:nth-child(4) { animation-delay: 0.4s; }
+
+        .chart-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 15px;
+            margin-bottom: 20px;
+            height: 400px;
+            position: relative;
+        }
+
+    
+
+        .chart-container .chart-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 15px;
+        }
+
+        .navbar {
+            padding: 15px 10px;
+            background: #fff;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 1000;
+        }
+
+        .form-select {
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-select:hover {
+            border-color: #0d6efd;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0d6efd;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            #sidebar {
+                margin-left: calc(-1 * var(--sidebar-width));
+            }
+            #sidebar.active {
+                margin-left: 0;
+            }
+        }
+/* Style pour le panneau d'information */
+.country-info-panel {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+}
+
+.country-info-panel.active {
+    transform: translateX(0);
+}
+
+.country-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.country-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.close-panel {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.country-data {
+    margin-bottom: 15px;
+}
+
+.data-item {
+    margin-bottom: 10px;
+}
+
+.data-label {
+    font-weight: 500;
+    color: #666;
+}
+
+.data-value {
+    font-size: 1.1em;
+    color: #333;
+}
+
+/* Style pour les pays sélectionnés */
+.countries.selected {
+    stroke: #2196F3;
+    stroke-width: 2px;
+    stroke-opacity: 1;
+}
+
+
+.info-box {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1.25rem;
+    box-shadow: 0 2px 8px rgba(20, 50, 90, 0.06);
+    transition: all 0.2s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.info-box:hover {
+    box-shadow: 0 3px 12px rgba(20, 50, 90, 0.08);
+    transform: translateY(-2px);
+}
+
+.info-box .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 0.875rem;
+}
+
+.info-box .icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(33, 150, 243, 0.1);
+}
+
+.info-box .icon i {
+    font-size: 1.25rem;
+    color: #2196F3;
+}
+
+.info-box .title {
+    color: #64748b;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    margin: 0;
+}
+
+.info-box .value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0.5rem 0;
+    line-height: 1;
+}
+
+.info-box .trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    margin-top: auto;
+}
+
+.trend-up {
+    color: #059669;
+    background: rgba(5, 150, 105, 0.08);
+}
+
+.trend-down {
+    color: #dc2626;
+    background: rgba(220, 38, 38, 0.08);
+}
+
+/* Variantes de couleurs pour les icônes */
+.info-box.water .icon {
+    background: rgba(33, 150, 243, 0.1);
+}
+.info-box.water .icon i {
+    color: #2196F3;
+}
+
+.info-box.resources .icon {
+    background: rgba(76, 175, 80, 0.1);
+}
+.info-box.resources .icon i {
+    color: #4CAF50;
+}
+
+.info-box.population .icon {
+    background: rgba(255, 193, 7, 0.1);
+}
+.info-box.population .icon i {
+    color: #FFC107;
+}
+
+.info-box.usage .icon {
+    background: rgba(156, 39, 176, 0.1);
+}
+.info-box.usage .icon i {
+    color: #9C27B0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.info-box {
+    animation: fadeInUp 0.4s ease-out forwards;
+    opacity: 0;
+}
+
+.info-box:nth-child(1) { animation-delay: 0.1s; }
+.info-box:nth-child(2) { animation-delay: 0.15s; }
+.info-box:nth-child(3) { animation-delay: 0.2s; }
+.info-box:nth-child(4) { animation-delay: 0.25s; }
+
+@media (max-width: 768px) {
+    .info-box {
+        padding: 1rem;
+    }
+    
+    .info-box .icon {
+        width: 38px;
+        height: 38px;
+    }
+    
+    .info-box .value {
+        font-size: 1.25rem;
+    }
+}
+
+    </style>
+
+
+
+    
+    
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>AquaMonde</h3>
+
+            </div>
+
+
+            <ul class="list-unstyled components">
+                <li >
+                    <a href="./index.html" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                </li>
+              
+                <li class="active">
+                    <a href="./data.html" data-section="data">
+                        <i class="fas fa-database me-2"></i>Données
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </nav>
+
+        <!-- Page Content -->
+
+        <div id="content">
+            <div class>
+                <svg></svg>
+                <script type="module" src="scripts/graph.js"></script>
+            </div>
+        </div>
+
+            
+        </div>
+        
+
+            
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    
+    
+
+</body>
+</html>

@@ -689,13 +689,13 @@
 
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="#" data-section="dashboard">
+                    <a href="./index.html" data-section="dashboard">
                         <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                     </a>
                 </li>
               
                 <li>
-                    <a href="#" data-section="data">
+                    <a href="./data.html" data-section="data">
                         <i class="fas fa-database me-2"></i>Données
                     </a>
                 </li>
@@ -886,6 +886,14 @@
                                     Object.keys(dataStructure).map(category => 
                                         `<option value="${category}">${category}</option>`
                                     ).join('');
+
+                                // Set default category to "Water use"
+                                categorySelect.value = "Water use";
+                                updateGroups();
+
+                                // Set default group to "Water withdrawal by sector"
+                                groupSelect.value = "Water withdrawal by sector";
+                                updateVariables();
                             }
                         
                             // Mettre à jour les groupes en fonction de la catégorie sélectionnée
