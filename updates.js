@@ -28,18 +28,18 @@ const metricsData = {
         { value: "47,200", metric: " billion m³", trend: "+0.5%" }  // for 2021
     ],
     population: [
-        { value: "7,0007", metric: " billion", trend: "+3.8%" },
-        { value: "7,0862", metric: " billion", trend: "+2.5%" },
-        { value: "7,1758", metric: " billion", trend: "-1.2%" },
-        { value: "7,2653", metric: " billion", trend: "+5.1%" },
-        { value: "7,3539", metric: " billion", trend: "+3.8%" },
-        { value: "7,4415", metric: " billion", trend: "+2.5%" },
-        { value: "7,5285", metric: " billion", trend: "-1.2%" },
-        { value: "7,6141", metric: " billion", trend: "+5.1%" },
-        { value: "7,6965", metric: " billion", trend: "+3.8%" },
-        { value: "7,7769", metric: " billion", trend: "+2.5%" },
-        { value: "7,8561", metric: " billion", trend: "-1.2%" },
-        { value: "7,9212", metric: " billion", trend: "+5.1%" }
+        { value: "7.007", metric: " billion", trend: "+1.1%" }, // for 2010
+        { value: "7.086", metric: " billion", trend: "+1.1%" }, // for 2011
+        { value: "7.176", metric: " billion", trend: "+1.3%" }, // for 2012
+        { value: "7.265", metric: " billion", trend: "+1.2%" }, // for 2013
+        { value: "7.354", metric: " billion", trend: "+1.2%" }, // for 2014
+        { value: "7.442", metric: " billion", trend: "+1.2%" }, // for 2015
+        { value: "7.529", metric: " billion", trend: "+1.2%" }, // for 2016
+        { value: "7.614", metric: " billion", trend: "+1.1%" }, // for 2017
+        { value: "7.697", metric: " billion", trend: "+1.1%" }, // for 2018
+        { value: "7.777", metric: " billion", trend: "+1.0%" }, // for 2019
+        { value: "7.856", metric: " billion", trend: "+1.0%" }, // for 2020
+        { value: "7.921", metric: " billion", trend: "+0.8%" }  // for 2021
     ],
     usageRates: [
         { value: "2010", metric: "", trend: "+1" },
@@ -56,6 +56,7 @@ const metricsData = {
         { value: "2021", metric: "", trend: "+1" }
     ]
 };
+
 
 
 
