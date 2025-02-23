@@ -1,30 +1,63 @@
-// Données multiples pour chaque métrique
 const metricsData = {
     consumption: [
-        { value: "2.5M", metric: "m³/jour", trend: "+5.2%" },
-        { value: "750K", metric: "L/heure", trend: "-3.1%" },
-        { value: "1.8M", metric: "m³/jour", trend: "+2.4%" },
-        { value: "3.2M", metric: "m³/jour", trend: "-4.7%" }
+        { value: "4,000", metric: " billion m³", trend: "+1.2%" }, // for 2010
+        { value: "4,080", metric: " billion m³", trend: "+2.0%" }, // for 2011
+        { value: "4,150", metric: " billion m³", trend: "+1.7%" }, // for 2012
+        { value: "4,230", metric: " billion m³", trend: "+1.9%" }, // for 2013
+        { value: "4,310", metric: " billion m³", trend: "+1.9%" }, // for 2014
+        { value: "4,400", metric: " billion m³", trend: "+2.1%" }, // for 2015
+        { value: "4,500", metric: " billion m³", trend: "+2.3%" }, // for 2016
+        { value: "4,600", metric: " billion m³", trend: "+2.2%" }, // for 2017
+        { value: "4,750", metric: " billion m³", trend: "+3.3%" }, // for 2018
+        { value: "4,860", metric: " billion m³", trend: "+2.3%" }, // for 2019
+        { value: "5,000", metric: " billion m³", trend: "+2.9%" }, // for 2020
+        { value: "5,120", metric: " billion m³", trend: "+2.4%" }  // for 2021
     ],
     resources: [
-        { value: "4.8M", metric: "m³", trend: "-2.1%" },
-        { value: "3.9M", metric: "m³", trend: "+1.8%" },
-        { value: "5.2M", metric: "m³", trend: "-3.5%" },
-        { value: "4.1M", metric: "m³", trend: "+4.2%" }
+        { value: "45,000", metric: " billion m³", trend: "+0.3%" }, // for 2010
+        { value: "45,150", metric: " billion m³", trend: "+0.4%" }, // for 2011
+        { value: "45,300", metric: " billion m³", trend: "+0.3%" }, // for 2012
+        { value: "45,500", metric: " billion m³", trend: "+0.4%" }, // for 2013
+        { value: "45,700", metric: " billion m³", trend: "+0.4%" }, // for 2014
+        { value: "45,950", metric: " billion m³", trend: "+0.5%" }, // for 2015
+        { value: "46,100", metric: " billion m³", trend: "+0.3%" }, // for 2016
+        { value: "46,350", metric: " billion m³", trend: "+0.5%" }, // for 2017
+        { value: "46,500", metric: " billion m³", trend: "+0.3%" }, // for 2018
+        { value: "46,700", metric: " billion m³", trend: "+0.4%" }, // for 2019
+        { value: "46,950", metric: " billion m³", trend: "+0.5%" }, // for 2020
+        { value: "47,200", metric: " billion m³", trend: "+0.5%" }  // for 2021
     ],
     population: [
-        { value: "1.2M", metric: "habitants", trend: "+3.8%" },
-        { value: "950K", metric: "habitants", trend: "+2.5%" },
-        { value: "1.4M", metric: "habitants", trend: "-1.2%" },
-        { value: "1.1M", metric: "habitants", trend: "+5.1%" }
+        { value: "7,0007", metric: " billion", trend: "+3.8%" },
+        { value: "7,0862", metric: " billion", trend: "+2.5%" },
+        { value: "7,1758", metric: " billion", trend: "-1.2%" },
+        { value: "7,2653", metric: " billion", trend: "+5.1%" },
+        { value: "7,3539", metric: " billion", trend: "+3.8%" },
+        { value: "7,4415", metric: " billion", trend: "+2.5%" },
+        { value: "7,5285", metric: " billion", trend: "-1.2%" },
+        { value: "7,6141", metric: " billion", trend: "+5.1%" },
+        { value: "7,6965", metric: " billion", trend: "+3.8%" },
+        { value: "7,7769", metric: " billion", trend: "+2.5%" },
+        { value: "7,8561", metric: " billion", trend: "-1.2%" },
+        { value: "7,9212", metric: " billion", trend: "+5.1%" }
     ],
     usageRates: [
-        { value: "52.1", metric: "%", trend: "+1.5%" },
-        { value: "48.3", metric: "%", trend: "-2.8%" },
-        { value: "55.7", metric: "%", trend: "+3.2%" },
-        { value: "49.9", metric: "%", trend: "-1.9%" }
+        { value: "2010", metric: "", trend: "+1" },
+        { value: "2011", metric: "", trend: "+1" },
+        { value: "2012", metric: "", trend: "+1" },
+        { value: "2013", metric: "", trend: "+1" },
+        { value: "2014", metric: "", trend: "+1" },
+        { value: "2015", metric: "", trend: "+1" },
+        { value: "2016", metric: "", trend: "+1" },
+        { value: "2017", metric: "", trend: "+1" },
+        { value: "2018", metric: "", trend: "+1" },
+        { value: "2019", metric: "", trend: "+1" },
+        { value: "2020", metric: "", trend: "+1" },
+        { value: "2021", metric: "", trend: "+1" }
     ]
 };
+
+
 
 // Index actuel pour chaque métrique
 let currentIndices = {
